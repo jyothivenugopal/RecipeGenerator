@@ -96,6 +96,8 @@ if uploaded_file:
 # User input
 ingredients = st.text_input("Enter ingredients (comma-separated):", "")
 
+ingredients_from_image = read_file('pantry.txt')
+
 # print recipe on the UI
 if st.button("Generate Recipe"):
     if ingredients:
@@ -105,11 +107,11 @@ if st.button("Generate Recipe"):
             st.subheader("Here’s what you can cook according to ChatGPT:")
             st.write(recipe)
 
-            recipe_from_vector = search_recipes(ingredients)
+            recipe_from_vector = search_recipes(ingredients_from_image)
             st.subheader("Here’s what you can cook, according to the vector store:")
             for idx, recipe in enumerate(recipe_from_vector, start=1):
                 st.markdown(f"**Recipe {idx}:**")
-                st.markdown(f"**Ingredients**: {ingredients}")
+                #st.markdown(f"**Ingredients**: {ingredients}")
                 st.markdown(f"**Recipe Details**: {recipe['recipe']}")
                 st.markdown(f"**Score**: {recipe['score']:.2f}")
                 st.write("---")  # Add a separator between recipes
