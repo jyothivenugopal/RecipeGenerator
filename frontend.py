@@ -114,4 +114,4 @@ if st.button("Generate Recipe"):
                 st.markdown(f"**Score**: {recipe['score']:.2f}")
                 st.write("---")  # Add a separator between recipes
     else:
-        st.warning("Please enter some ingredients first!")
+        st.warning("Please enter some ingredients first! If submitted photo, just enter some random text!")
