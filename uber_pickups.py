@@ -60,8 +60,7 @@ def store_kaggle_recipes():
     
     for idx, row in df.iterrows():
         # Create a combined text description for embedding
-        recipe_text = f"{row['title']}: Ingredients - {row['ingredients']}. Directions - {row['directions']}"
-        
+        recipe_text = f"{row['title']}: Ingredients - {row['ingredients']}. Instructions - {row['directions']}"
         # Generate embedding for the recipe
         embedding = get_embedding(recipe_text)
         
