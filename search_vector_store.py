@@ -28,8 +28,14 @@ def search_recipes(user_input):
         top_k=3,  # Get top 3 similar recipes
         include_metadata=True
     )
+
+    # Prepare the results as a list of dictionaries
+    recipes = [
+        {
+            "recipe": match["metadata"].get("text", "No recipe text available"),  # Safe access
+            "score": match.get("score", 0),  # Default score if missing
+        }
+        for match in results.get("matches", [])
+    ]
     
-    my_list = []
-    for match in results["matches"]:
-        my_list.append(f"Recipe: {match['metadata']['text']}, Score: {match['score']}")
-    return my_list
+    return recipes

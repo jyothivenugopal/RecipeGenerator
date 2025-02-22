@@ -107,6 +107,11 @@ if st.button("Generate Recipe"):
 
             recipe_from_vector = search_recipes(ingredients)
             st.subheader("Here’s what you can cook, according to the vector store:")
-            st.write(recipe_from_vector)
+            for idx, recipe in enumerate(recipe_from_vector, start=1):
+                st.markdown(f"**Recipe {idx}:**")
+                st.markdown(f"**Ingredients**: {ingredients}")
+                st.markdown(f"**Recipe Details**: {recipe['recipe']}")
+                st.markdown(f"**Score**: {recipe['score']:.2f}")
+                st.write("---")  # Add a separator between recipes
     else:
         st.warning("Please enter some ingredients first!")
