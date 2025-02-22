@@ -5,3 +5,7 @@ python generate_vector_store.py \
     ./storage/test_recipe \
     test_recipe \
     $RECIPE_FILE 
+
+python ../agent.py \
+    ./storage/test_recipe \
+    "I have egg and cheese. What should I make"
