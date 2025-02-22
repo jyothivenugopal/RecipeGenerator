@@ -64,5 +64,37 @@ def get_embedding(text):
     )
     return response.data[0].embedding
 
+# Function to process DataFrame and store recipes in Pinecone
+def store_kaggle_recipes():
+    vectors = []
+    
+    for idx, row in df.iterrows():
+        # Create a combined text description for embedding
+        recipe_text = f"{row['Recipe Name']}: Ingredients - {row['Ingredients']}. Instructions - {row['Instructions']}"
+        
+        # Generate embedding for the recipe
+        embedding = get_embedding(recipe_text)
+        
+        # Append to batch
+        vectors.append((
+            f"recipe_{idx}",  # Unique ID
+            embedding,  # Vector representation
+            {"text": recipe_text, "diet": row.get("Diet", "Unknown")}
+        ))
+
+        # Insert in batches of 100 (to optimize API usage)
+        if len(vectors) >= 100:
+            index.upsert(vectors=vectors)
+            vectors = []  # Reset batch
+
+    # Insert any remaining data
+    if vectors:
+        index.upsert(vectors=vectors)
+
+    print(f"{len(df)} recipes successfully stored in Pinecone!")
+
+# Run once to populate the index
+store_kaggle_recipes()
+
 # Preview dataset
 # print(df.head())
