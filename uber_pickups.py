@@ -94,9 +94,11 @@ def search_recipes(user_input):
         top_k=3,  # Get top 3 similar recipes
         include_metadata=True
     )
-
+    
+    my_list = []
     for match in results["matches"]:
-        print(f"Recipe: {match['metadata']['text']}, Score: {match['score']}")
+        my_list.append(f"Recipe: {match['metadata']['text']}, Score: {match['score']}")
+    return my_list
 
 st.title('Recipe Recommender')
 st.write("Enter your ingredients and get recipe suggestions!")
