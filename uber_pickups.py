@@ -94,11 +94,17 @@ def search_recipes(user_input):
         top_k=3,  # Get top 3 similar recipes
         include_metadata=True
     )
+
+    # Prepare the results as a list of dictionaries
+    recipes = [
+        {
+            "recipe": match["metadata"].get("text", "No recipe text available"),  # Safe access
+            "score": match.get("score", 0),  # Default score if missing
+        }
+        for match in results.get("matches", [])
+    ]
     
-    my_list = []
-    for match in results["matches"]:
-        my_list.append(f"Recipe: {match['metadata']['text']}, Score: {match['score']}")
-    return my_list
+    return recipes
 
 st.title('Recipe Recommender')
 st.write("Enter your ingredients and get recipe suggestions!")
@@ -110,12 +116,19 @@ ingredients = st.text_input("Enter ingredients (comma-separated):", "")
 if st.button("Generate Recipe"):
     if ingredients:
         with st.spinner("Generating recipe..."):
-            recipe = search_recipes(ingredients)
+            recipes = search_recipes(ingredients)
+            
             st.subheader("Here’s what you can cook:")
-            st.write(recipe)
+            
+            # Loop through the recipes and display them in a clean format
+            for idx, recipe in enumerate(recipes, start=1):
+                st.markdown(f"**Recipe {idx}:**")
+                st.markdown(f"**Ingredients**: {ingredients}")
+                st.markdown(f"**Recipe Details**: {recipe['recipe']}")
+                st.markdown(f"**Score**: {recipe['score']:.2f}")
+                st.write("---")  # Add a separator between recipes
     else:
         st.warning("Please enter some ingredients first!")
-
 
 # Preview dataset
 # print(df.head())
