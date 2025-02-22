@@ -5,7 +5,6 @@ import openai
 import os
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-#client = openai.OpenAI(api_key="sk-proj-AkgAG0M5oMxRn6D4BcD546vvO5S5U4d1JNxj_kKgr2DGvtVZD0AS16Z3FlWuuxrZN-dpXvAyqMT3BlbkFJSVbay63omxPxqENcTh5skhWpmw3mFtyX5XcQhhrx2B6VusCxlLcWPNiV4yUlEZ1I-HNFWwsP4Ay")
 
 def get_recipe(ingredients):
     prompt = f"I have {ingredients}. What can I cook?"
