@@ -5,9 +5,14 @@ import openai
 import os
 from pinecone import Pinecone, ServerlessSpec
 import time
+from os import environ
+from dotenv import load_dotenv
+load_dotenv()
+OPENAI_API_KEY = environ["OPENAI_API_KEY"]
+lol = environ["PINECONE_API_KEY"]
 
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+client = openai.OpenAI(api_key=OPENAI_API_KEY)
+pc = Pinecone(api_key=lol)
 
 #def get_recipe(ingredients):
 #     prompt = f"I have {ingredients}. What can I cook?"
